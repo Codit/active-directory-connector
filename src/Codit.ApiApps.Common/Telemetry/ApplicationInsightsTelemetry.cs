@@ -19,12 +19,12 @@ namespace Codit.ApiApps.Common.Telemetry
         /// <summary>
         ///     Constructor
         /// </summary>
-        private ApplicationInsightsTelemetry()
+        public ApplicationInsightsTelemetry()
         {
             TelemetryConfiguration.Active.DisableTelemetry = false;
             _telemetryClient = new TelemetryClient
             {
-                InstrumentationKey = ConfigurationManager.AppSettings["APPINSIGHTS_INSTRUMENTATIONKEY"]
+                InstrumentationKey = ConfigurationManager.AppSettings["Telemetry.ApplicationInsights"]
             };
         }
 

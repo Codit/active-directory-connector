@@ -44,6 +44,11 @@ namespace Codit.ApiApps.ActiveDirectory
 
         private static void ConfigureDependencyInjection()
         {
+            if (DependencyContainer.Instance.TryGet<ITelemetry>() == null)
+            {
+                DependencyContainer.Instance.Bind<ITelemetry>().To<ApplicationInsightsTelemetry>().InSingletonScope();
+            }
+
             if (DependencyContainer.Instance.TryGet<ISecretProvider>() == null)
             {
                 DependencyContainer.Instance.Bind<ISecretProvider>().To<KeyVaultSecretProvider>().InSingletonScope();
@@ -60,11 +65,9 @@ namespace Codit.ApiApps.ActiveDirectory
 
         private static void ConfigureExceptionHandling(IAppBuilder app, HttpConfiguration httpConfiguration)
         {
-            var telemetry = DependencyContainer.Instance.Get<ITelemetry>();
-
             app.Use<GlobalExceptionMiddleware>();
             httpConfiguration.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionResponseHandler());
-            httpConfiguration.Services.Add(typeof(IExceptionLogger), new CustomExceptionLogger(telemetry));
+            httpConfiguration.Services.Add(typeof(IExceptionLogger), new CustomExceptionLogger());
         }
 
         private static void ConfigureFormatters(HttpConfiguration httpConfiguration)

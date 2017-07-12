@@ -4,19 +4,14 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
+using Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement;
 using Codit.ApiApps.Common.Telemetry;
+using Ninject;
 
 namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Loggers
 {
     public class CustomExceptionLogger : IExceptionLogger
     {
-        private readonly ITelemetry _telemetry;
-
-        public CustomExceptionLogger(ITelemetry telemetry)
-        {
-            _telemetry = telemetry;
-        }
-
         public virtual Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
         {
             LogCore(context);
@@ -33,7 +28,7 @@ namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Loggers
                 customProperties.Add("CorrelationId", Convert.ToString((object)correlationId));
             }
 
-            _telemetry.TrackException(context.Exception, customProperties);
+            DependencyContainer.Instance.Get<ITelemetry>().TrackException(context.Exception, customProperties);
         }
     }
 }

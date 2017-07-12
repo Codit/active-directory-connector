@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement;
 using Codit.ApiApps.Common.Telemetry;
 using Microsoft.Owin;
+using Ninject;
 
 namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling
 {
     public class GlobalExceptionMiddleware : OwinMiddleware
     {
-        private readonly ITelemetry _telemetry;
-
-        public GlobalExceptionMiddleware(OwinMiddleware next, ITelemetry telemetry) : base(next)
+        public GlobalExceptionMiddleware(OwinMiddleware next) : base(next)
         {
-            _telemetry = telemetry;
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -22,7 +21,7 @@ namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling
             }
             catch (Exception exception)
             {
-                _telemetry.TrackException(exception);
+                DependencyContainer.Instance.Get<ITelemetry>().TrackException(exception);
                 throw;
             }
         }
