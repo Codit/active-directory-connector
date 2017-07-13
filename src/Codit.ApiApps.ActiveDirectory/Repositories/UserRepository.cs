@@ -37,7 +37,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             var foundUsers = new List<User>();
             var usersPage = await activeDirectoryClient.Users.ExecuteAsync();
 
-            while (usersPage != null)
+            while (usersPage.MorePagesAvailable == false)
             {
                 var userNamesInCurrentPage = usersPage.CurrentPage.Select(MapUserToExternalContract);
                 foundUsers.AddRange(userNamesInCurrentPage);
@@ -60,7 +60,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 Country = activeDirectoryUser.Country,
                 Type = activeDirectoryUser.UserType
             };
-           
+
             return user;
         }
 
