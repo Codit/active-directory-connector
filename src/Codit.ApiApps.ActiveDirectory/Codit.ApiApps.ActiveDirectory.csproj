@@ -131,6 +131,7 @@
     <Compile Include="Middleware\ExceptionHandling\Loggers\CustomExceptionLogger.cs" />
     <Compile Include="OwinStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
