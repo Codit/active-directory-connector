@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Codit.ApiApps.ActiveDirectory.Repositories
@@ -31,9 +32,18 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         {
             var activeDirectoryClient = GetActiveDirectoryClient();
 
-            // TODO: Take paging into account instead of only taking first batch
-            var foundUsers = await activeDirectoryClient.Users.ExecuteAsync();
-            return foundUsers.CurrentPage.Select(user => user.DisplayName);
+            var foundUserNames = new List<string>();
+            IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+
+            while (usersPage != null)
+            {
+                IEnumerable<string> userNamesInCurrentPage = usersPage.CurrentPage.Select(user => user.DisplayName);
+                foundUserNames.AddRange(userNamesInCurrentPage);
+
+                usersPage = await usersPage.GetNextPageAsync();
+            }
+
+            return foundUserNames;
         }
 
         private static ActiveDirectoryClient GetActiveDirectoryClient()
