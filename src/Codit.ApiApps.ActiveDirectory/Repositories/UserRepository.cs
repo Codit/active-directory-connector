@@ -37,7 +37,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             var foundUsers = new List<User>();
             var usersPage = await activeDirectoryClient.Users.ExecuteAsync();
 
-            while (usersPage.MorePagesAvailable == false)
+            while (usersPage.MorePagesAvailable)
             {
                 var userNamesInCurrentPage = usersPage.CurrentPage.Select(MapUserToExternalContract);
                 foundUsers.AddRange(userNamesInCurrentPage);
