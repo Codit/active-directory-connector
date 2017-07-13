@@ -10,14 +10,14 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         private readonly UserRepository userRepository = new UserRepository();
 
         [Route("users")]
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> GetUsers()
         {
             var users = await userRepository.Get();
             return Ok(users);
         }
 
-        [Route("users")]
-        public async Task<IHttpActionResult> Get(string objectId)
+        [Route("user")]
+        public async Task<IHttpActionResult> GetUser(string objectId)
         {
             var user = await userRepository.Get(objectId);
             return Ok(user);
