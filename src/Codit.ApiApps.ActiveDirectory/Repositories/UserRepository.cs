@@ -28,7 +28,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <summary>
         ///     Gets all users
         /// </summary>
-        public async Task<IEnumerable<string>> Get()
+        public async Task<List<string>> Get()
         {
             var activeDirectoryClient = GetActiveDirectoryClient();
 
