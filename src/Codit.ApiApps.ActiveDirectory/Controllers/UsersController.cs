@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Codit.ApiApps.ActiveDirectory.Contracts.v1;
 using Codit.ApiApps.ActiveDirectory.Repositories;
 using Swashbuckle.Swagger.Annotations;
 
@@ -17,7 +18,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         ///     Gets all users in Active Directory
         /// </summary>
         [Route("users")]
-        [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<string>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<User>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "No users were found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
         public async Task<IHttpActionResult> GetUsers()
@@ -32,7 +33,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         /// </summary>
         /// <param name="objectId">Object Id for the user to lookup</param>
         [Route("user")]
-        [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(string))]
+        [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.NotFound, "User with specified objectId was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
         public async Task<IHttpActionResult> GetUser(string objectId)

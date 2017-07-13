@@ -4,8 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
-using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using User = Codit.ApiApps.ActiveDirectory.Contracts.v1.User;
 
 namespace Codit.ApiApps.ActiveDirectory.Repositories
 {
@@ -18,32 +18,50 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         ///     Gets a specific user
         /// </summary>
         /// <param name="objectId">Object Id of the user</param>
-        public async Task<string> Get(string objectId)
+        public async Task<User> Get(string objectId)
         {
             var activeDirectoryClient = GetActiveDirectoryClient();
             var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
-            return foundUser.DisplayName;
+            var user = MapUserToExternalContract(foundUser);
+
+            return user;
         }
 
         /// <summary>
         ///     Gets all users
         /// </summary>
-        public async Task<List<string>> Get()
+        public async Task<List<User>> Get()
         {
             var activeDirectoryClient = GetActiveDirectoryClient();
 
-            var foundUserNames = new List<string>();
-            IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+            var foundUsers = new List<User>();
+            var usersPage = await activeDirectoryClient.Users.ExecuteAsync();
 
             while (usersPage != null)
             {
-                IEnumerable<string> userNamesInCurrentPage = usersPage.CurrentPage.Select(user => user.DisplayName);
-                foundUserNames.AddRange(userNamesInCurrentPage);
+                var userNamesInCurrentPage = usersPage.CurrentPage.Select(MapUserToExternalContract);
+                foundUsers.AddRange(userNamesInCurrentPage);
 
                 usersPage = await usersPage.GetNextPageAsync();
             }
 
-            return foundUserNames;
+            return foundUsers;
+        }
+
+        private static User MapUserToExternalContract(IUser activeDirectoryUser)
+        {
+            var user = new User
+            {
+                FirstName = activeDirectoryUser.GivenName,
+                LastName = activeDirectoryUser.Surname,
+                DisplayName = activeDirectoryUser.DisplayName,
+                UserPrincipalName = activeDirectoryUser.UserPrincipalName,
+                CompanyName = activeDirectoryUser.CompanyName,
+                Country = activeDirectoryUser.Country,
+                Type = activeDirectoryUser.UserType
+            };
+           
+            return user;
         }
 
         private static ActiveDirectoryClient GetActiveDirectoryClient()
