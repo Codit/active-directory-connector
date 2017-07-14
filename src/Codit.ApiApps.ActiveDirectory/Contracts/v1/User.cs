@@ -29,5 +29,8 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 
         [DataMember]
         public string Type { get; set; }
+
+        [DataMember]
+        public string ObjectId { get; set; }
     }
 }
