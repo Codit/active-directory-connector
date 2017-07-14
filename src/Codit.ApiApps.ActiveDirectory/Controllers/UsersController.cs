@@ -53,7 +53,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         /// </summary>
         /// <param name="firstName">First name of the user</param>
         /// <param name="lastName">Last name of the user</param>
-        [Route("users")]
+        [Route("users/{lastName}/{firstName}")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Specified first and/or last name were not valid")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User was not found")]
