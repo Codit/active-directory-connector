@@ -32,7 +32,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         ///     Gets a specific user
         /// </summary>
         /// <param name="objectId">Object Id for the user to lookup</param>
-        [Route("user")]
+        [Route("users/{objectId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.NotFound, "User with specified objectId was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
