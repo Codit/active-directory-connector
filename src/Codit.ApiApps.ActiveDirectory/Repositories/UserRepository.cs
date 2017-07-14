@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Codit.ApiApps.Common;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using User = Codit.ApiApps.ActiveDirectory.Contracts.v1.User;
 
@@ -12,13 +13,19 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         ///     Gets a specific user
         /// </summary>
         /// <param name="objectId">Object Id of the user</param>
-        public async Task<User> Get(string objectId)
+        public async Task<Maybe<User>> Get(string objectId)
         {
             var activeDirectoryClient = GetActiveDirectoryClient();
             var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
+
+            if (foundUser == null)
+            {
+                return new Maybe<User>();
+            }
+
             var user = MapUserToExternalContract(foundUser);
 
-            return user;
+            return new Maybe<User>(user);
         }
 
         /// <summary>

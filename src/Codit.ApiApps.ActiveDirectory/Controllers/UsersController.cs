@@ -38,8 +38,8 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
         public async Task<IHttpActionResult> GetUser(string objectId)
         {
-            var user = await _userRepository.Get(objectId);
-            return Ok(user);
+            var potenatialUser = await _userRepository.Get(objectId);
+            return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
         }
     }
 }
