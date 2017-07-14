@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Codit.ApiApps.Common;
@@ -7,7 +8,7 @@ using User = Codit.ApiApps.ActiveDirectory.Contracts.v1.User;
 
 namespace Codit.ApiApps.ActiveDirectory.Repositories
 {
-    public class UserRepository: ActiveDirectoryRepository
+    public class UserRepository : ActiveDirectoryRepository
     {
         /// <summary>
         ///     Gets a specific user
@@ -15,6 +16,8 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <param name="objectId">Object Id of the user</param>
         public async Task<Maybe<User>> Get(string objectId)
         {
+            Guard.AgainstNullOrWhitespace(objectId, nameof(objectId));
+
             var activeDirectoryClient = GetActiveDirectoryClient();
             var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
 
@@ -23,6 +26,37 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 return new Maybe<User>();
             }
 
+            var user = MapUserToExternalContract(foundUser);
+
+            return new Maybe<User>(user);
+        }
+
+        /// <summary>
+        ///     Gets a specific user
+        /// </summary>
+        /// <param name="firstName">First name of the user</param>
+        /// <param name="lastName">Last name of the user</param>
+        public async Task<Maybe<User>> Get(string firstName, string lastName)
+        {
+            Guard.AgainstNullOrWhitespace(firstName, nameof(firstName));
+            Guard.AgainstNullOrWhitespace(lastName, nameof(lastName));
+
+            var activeDirectoryClient = GetActiveDirectoryClient();
+            var foundUsers = await activeDirectoryClient.Users
+                .Where(usr => usr.GivenName.Equals(firstName, StringComparison.InvariantCultureIgnoreCase)
+                && usr.Surname.Equals(lastName, StringComparison.InvariantCultureIgnoreCase)).ExecuteAsync();
+
+            if (foundUsers == null)
+            {
+                return new Maybe<User>();
+            }
+
+            if (foundUsers.CurrentPage.Count > 1)
+            {
+                throw new InvalidOperationException($"More than one user was found with first name '{firstName}' and last name '{lastName}'");
+            }
+
+            var foundUser = foundUsers.CurrentPage.First();
             var user = MapUserToExternalContract(foundUser);
 
             return new Maybe<User>(user);
