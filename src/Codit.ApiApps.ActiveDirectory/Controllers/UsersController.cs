@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Codit.ApiApps.ActiveDirectory.Contracts.v1;
 using Codit.ApiApps.ActiveDirectory.Repositories;
+using Codit.ApiApps.Common;
 using Swashbuckle.Swagger.Annotations;
 
 namespace Codit.ApiApps.ActiveDirectory.Controllers
@@ -23,7 +24,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
         public async Task<IHttpActionResult> GetUsers()
         {
-            var users = await _userRepository.Get();
+            List<User> users = await _userRepository.Get();
 
             return users.Any() ? (IHttpActionResult)Ok(users) : NotFound();
         }
@@ -44,7 +45,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
                 return BadRequest("Object id was not specified");
             }
 
-            var potenatialUser = await _userRepository.Get(objectId);
+            Maybe<User> potenatialUser = await _userRepository.Get(objectId);
             return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
         }
 
@@ -69,7 +70,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
                 return BadRequest("Last name was not specified");
             }
 
-            var potenatialUser = await _userRepository.Get(firstName, lastName);
+            Maybe<User> potenatialUser = await _userRepository.Get(firstName, lastName);
             return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
         }
     }

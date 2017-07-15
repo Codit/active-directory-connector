@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Codit.ApiApps.Common;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
 using Microsoft.Data.OData;
 using User = Codit.ApiApps.ActiveDirectory.Contracts.v1.User;
 
@@ -20,23 +21,23 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         {
             Guard.AgainstNullOrWhitespace(objectId, nameof(objectId));
 
-            var activeDirectoryClient = GetActiveDirectoryClient();
+            ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
             try
             {
-                var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
+                IUser foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
 
                 if (foundUser == null)
                 {
                     return new Maybe<User>();
                 }
 
-                var user = Mapper.Map<IUser, User>(foundUser);
+                User user = Mapper.Map<IUser, User>(foundUser);
 
                 return new Maybe<User>(user);
             }
             catch (ODataErrorException oDataErrorException)
             {
-                var objectNotFoundMessage =
+                string objectNotFoundMessage =
                     $"Resource '{objectId}' does not exist or one of its queried reference-property objects are not present.";
 
                 if (oDataErrorException.Message.Contains(objectNotFoundMessage))
@@ -58,8 +59,8 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             Guard.AgainstNullOrWhitespace(firstName, nameof(firstName));
             Guard.AgainstNullOrWhitespace(lastName, nameof(lastName));
 
-            var activeDirectoryClient = GetActiveDirectoryClient();
-            var foundUsers = await activeDirectoryClient.Users
+            ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
+            IPagedCollection<IUser> foundUsers = await activeDirectoryClient.Users
                 .Where(usr => usr.GivenName.Equals(firstName, StringComparison.InvariantCultureIgnoreCase)
                 && usr.Surname.Equals(lastName, StringComparison.InvariantCultureIgnoreCase)).ExecuteAsync();
 
@@ -73,8 +74,8 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 throw new InvalidOperationException($"More than one user was found with first name '{firstName}' and last name '{lastName}'");
             }
 
-            var foundUser = foundUsers.CurrentPage.First();
-            var user = Mapper.Map<IUser, User>(foundUser);
+            IUser foundUser = foundUsers.CurrentPage.First();
+            User user = Mapper.Map<IUser, User>(foundUser);
 
             return new Maybe<User>(user);
         }
@@ -84,14 +85,14 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// </summary>
         public async Task<List<User>> Get()
         {
-            var activeDirectoryClient = GetActiveDirectoryClient();
+            ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
 
             var foundUsers = new List<User>();
-            var usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+            IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
 
             while (usersPage.MorePagesAvailable)
             {
-                var userNamesInCurrentPage = usersPage.CurrentPage.Select(Mapper.Map<IUser, User>);
+                IEnumerable<User> userNamesInCurrentPage = usersPage.CurrentPage.Select(Mapper.Map<IUser, User>);
                 foundUsers.AddRange(userNamesInCurrentPage);
 
                 usersPage = await usersPage.GetNextPageAsync();
