@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Codit.ApiApps.Common;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.Data.OData;
 using User = Codit.ApiApps.ActiveDirectory.Contracts.v1.User;
 
 namespace Codit.ApiApps.ActiveDirectory.Repositories
@@ -19,16 +20,30 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             Guard.AgainstNullOrWhitespace(objectId, nameof(objectId));
 
             var activeDirectoryClient = GetActiveDirectoryClient();
-            var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
-
-            if (foundUser == null)
+            try
             {
-                return new Maybe<User>();
+                var foundUser = await activeDirectoryClient.Users.GetByObjectId(objectId).ExecuteAsync();
+
+                if (foundUser == null)
+                {
+                    return new Maybe<User>();
+                }
+                var user = MapUserToExternalContract(foundUser);
+
+                return new Maybe<User>(user);
             }
+            catch (ODataErrorException oDataErrorException)
+            {
+                var objectNotFoundMessage =
+                    $"Resource '{objectId}' does not exist or one of its queried reference-property objects are not present.";
 
-            var user = MapUserToExternalContract(foundUser);
+                if (oDataErrorException.Message.Contains(objectNotFoundMessage))
+                {
+                    return new Maybe<User>();
+                }
 
-            return new Maybe<User>(user);
+                throw;
+            }
         }
 
         /// <summary>
