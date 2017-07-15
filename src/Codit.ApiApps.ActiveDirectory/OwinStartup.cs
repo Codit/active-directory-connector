@@ -5,6 +5,8 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using AutoMapper;
 using Codit.ApiApps.ActiveDirectory;
+using Codit.ApiApps.ActiveDirectory.Contracts;
+using Codit.ApiApps.ActiveDirectory.Contracts.v1;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Handlers;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Loggers;
@@ -47,10 +49,7 @@ namespace Codit.ApiApps.ActiveDirectory
 
         private void ConfigureMapper()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<IUser, Contracts.v1.User>()
-                .ForMember(user => user.FirstName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.GivenName))
-                .ForMember(user => user.LastName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.Surname))
-            );
+            ContractMapping.Setup();
         }
 
         private static void ConfigureDependencyInjection()

@@ -127,6 +127,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contracts\IContract.cs" />
+    <Compile Include="Contracts\ContractMapping.cs" />
     <Compile Include="Contracts\v1\User.cs" />
     <Compile Include="Repositories\ActiveDirectoryRepository.cs" />
     <Compile Include="Controllers\UsersController.cs" />
