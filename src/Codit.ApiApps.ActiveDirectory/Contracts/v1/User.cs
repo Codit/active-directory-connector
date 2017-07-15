@@ -28,7 +28,7 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string UserPrincipalName { get; set; }
 
         [DataMember]
-        public string Type { get; set; }
+        public string UserType { get; set; }
 
         [DataMember]
         public string ObjectId { get; set; }

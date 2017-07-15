@@ -108,7 +108,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 UserPrincipalName = activeDirectoryUser.UserPrincipalName,
                 CompanyName = activeDirectoryUser.CompanyName,
                 Country = activeDirectoryUser.Country,
-                Type = activeDirectoryUser.UserType,
+                UserType = activeDirectoryUser.UserType,
                 ObjectId = activeDirectoryUser.ObjectId,
                 ObjectType = activeDirectoryUser.ObjectType
             };
