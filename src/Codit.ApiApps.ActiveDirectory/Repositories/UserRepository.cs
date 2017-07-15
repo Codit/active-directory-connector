@@ -46,7 +46,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 .Where(usr => usr.GivenName.Equals(firstName, StringComparison.InvariantCultureIgnoreCase)
                 && usr.Surname.Equals(lastName, StringComparison.InvariantCultureIgnoreCase)).ExecuteAsync();
 
-            if (foundUsers == null)
+            if (foundUsers?.CurrentPage == null || foundUsers.CurrentPage.Any() == false)
             {
                 return new Maybe<User>();
             }
