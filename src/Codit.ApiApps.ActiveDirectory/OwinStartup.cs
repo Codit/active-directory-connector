@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using AutoMapper;
 using Codit.ApiApps.ActiveDirectory;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Handlers;
@@ -16,6 +17,7 @@ using Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement;
 using Codit.ApiApps.Common.Configuration;
 using Codit.ApiApps.Common.Telemetry;
 using Codit.ApiApps.Security.KeyVault;
+using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Ninject;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
@@ -32,6 +34,7 @@ namespace Codit.ApiApps.ActiveDirectory
                 ConfigureExceptionHandling(app, GlobalConfiguration.Configuration);
                 ConfigureRoutes(GlobalConfiguration.Configuration);
                 ConfigureFormatters(GlobalConfiguration.Configuration);
+                ConfigureMapper();
 
                 GlobalConfiguration.Configuration.EnsureInitialized();
                 Trace.TraceInformation("Owin configured.");
@@ -40,6 +43,14 @@ namespace Codit.ApiApps.ActiveDirectory
             {
                 Trace.TraceError(ex.Message);
             }
+        }
+
+        private void ConfigureMapper()
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<IUser, Contracts.v1.User>()
+                .ForMember(user => user.FirstName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.GivenName))
+                .ForMember(user => user.LastName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.Surname))
+            );
         }
 
         private static void ConfigureDependencyInjection()

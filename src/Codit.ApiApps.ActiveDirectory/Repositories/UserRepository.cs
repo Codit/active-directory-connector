@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Codit.ApiApps.Common;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.Data.OData;
@@ -28,7 +29,8 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
                 {
                     return new Maybe<User>();
                 }
-                var user = MapUserToExternalContract(foundUser);
+
+                var user = Mapper.Map<IUser, User>(foundUser);
 
                 return new Maybe<User>(user);
             }
@@ -72,7 +74,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             }
 
             var foundUser = foundUsers.CurrentPage.First();
-            var user = MapUserToExternalContract(foundUser);
+            var user = Mapper.Map<IUser, User>(foundUser);
 
             return new Maybe<User>(user);
         }
@@ -89,31 +91,13 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
 
             while (usersPage.MorePagesAvailable)
             {
-                var userNamesInCurrentPage = usersPage.CurrentPage.Select(MapUserToExternalContract);
+                var userNamesInCurrentPage = usersPage.CurrentPage.Select(Mapper.Map<IUser, User>);
                 foundUsers.AddRange(userNamesInCurrentPage);
 
                 usersPage = await usersPage.GetNextPageAsync();
             }
 
             return foundUsers;
-        }
-
-        private static User MapUserToExternalContract(IUser activeDirectoryUser)
-        {
-            var user = new User
-            {
-                FirstName = activeDirectoryUser.GivenName,
-                LastName = activeDirectoryUser.Surname,
-                DisplayName = activeDirectoryUser.DisplayName,
-                UserPrincipalName = activeDirectoryUser.UserPrincipalName,
-                CompanyName = activeDirectoryUser.CompanyName,
-                Country = activeDirectoryUser.Country,
-                UserType = activeDirectoryUser.UserType,
-                ObjectId = activeDirectoryUser.ObjectId,
-                ObjectType = activeDirectoryUser.ObjectType
-            };
-
-            return user;
         }
     }
 }
