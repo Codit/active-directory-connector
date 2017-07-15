@@ -2,9 +2,9 @@
 
 namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
 {
-    internal class ContractMappingTest : UnitTest
+    public class ContractMappingTest : UnitTest
     {
-        internal ContractMappingTest()
+        public ContractMappingTest()
         {
             ContractMapping.Setup();
         }

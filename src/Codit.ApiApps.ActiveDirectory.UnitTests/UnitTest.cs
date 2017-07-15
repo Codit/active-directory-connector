@@ -3,7 +3,7 @@
 namespace Codit.ApiApps.ActiveDirectory.UnitTests
 {
     [Category("UnitTests")]
-    internal class UnitTest
+    public class UnitTest
     {
     }
 }

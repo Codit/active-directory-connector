@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
 {
-    internal class UserContractMappingTests : ContractMappingTest
+    public class UserContractMappingTests : ContractMappingTest
     {
         [Test]
         public void MapActiveDirectoryUserToContractUser_ValidInput_MappingSucceeds()
