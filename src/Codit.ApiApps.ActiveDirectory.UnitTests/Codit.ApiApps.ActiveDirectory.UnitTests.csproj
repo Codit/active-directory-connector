@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <Compile Include="ContractMappings\ContractMappingTest.cs" />
     <Compile Include="ContractMappings\UserContractMappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
