@@ -30,47 +30,22 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         }
 
         /// <summary>
-        ///     Gets a specific user
+        ///     Gets a specific user with a specific user principle name
         /// </summary>
-        /// <param name="objectId">Object Id for the user to lookup</param>
-        [Route("users/{objectId}")]
+        /// <param name="userPrincipleName">User principle name of the user to lookup</param>
+        [Route("user")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Specified object id was not valid")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User with specified objectId was not found")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Specified user principle name was not valid")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "User with specified user principle name was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
-        public async Task<IHttpActionResult> GetUserByObjectId(string objectId)
+        public async Task<IHttpActionResult> GetUserByUserPrincipleName(string userPrincipleName)
         {
-            if (string.IsNullOrWhiteSpace(objectId))
+            if (string.IsNullOrWhiteSpace(userPrincipleName))
             {
-                return BadRequest("Object id was not specified");
+                return BadRequest("User principle name was not specified");
             }
 
-            Maybe<User> potenatialUser = await _userRepository.Get(objectId);
-            return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
-        }
-
-        /// <summary>
-        ///     Gets a specific user
-        /// </summary>
-        /// <param name="firstName">First name of the user</param>
-        /// <param name="lastName">Last name of the user</param>
-        [Route("users/{lastName}/{firstName}")]
-        [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Specified first and/or last name were not valid")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User was not found")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
-        public async Task<IHttpActionResult> GetUserByFirstAndLastName(string firstName, string lastName)
-        {
-            if (string.IsNullOrWhiteSpace(firstName))
-            {
-                return BadRequest("First name was not specified");
-            }
-            if (string.IsNullOrWhiteSpace(lastName))
-            {
-                return BadRequest("Last name was not specified");
-            }
-
-            Maybe<User> potenatialUser = await _userRepository.Get(firstName, lastName);
+            Maybe<User> potenatialUser = await _userRepository.Get(userPrincipleName);
             return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
         }
     }
