@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codit.ApiApps.Common", "Cod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codit.ApiApps.Security.KeyVault", "Codit.ApiApps.Security.KeyVault\Codit.ApiApps.Security.KeyVault.csproj", "{926CB1F9-8F40-4BB0-81FD-B085AF370AA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codit.ApiApps.ActiveDirectory.UnitTests", "Codit.ApiApps.ActiveDirectory.UnitTests\Codit.ApiApps.ActiveDirectory.UnitTests.csproj", "{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2042768E-256F-4592-AF66-211CD843380B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{48305F2E-C928-4430-8C28-9EE6AC0D5498}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +45,22 @@ Global
 		{926CB1F9-8F40-4BB0-81FD-B085AF370AA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{926CB1F9-8F40-4BB0-81FD-B085AF370AA1}.Release|x64.ActiveCfg = Release|Any CPU
 		{926CB1F9-8F40-4BB0-81FD-B085AF370AA1}.Release|x64.Build.0 = Release|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Debug|x64.Build.0 = Debug|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Release|x64.ActiveCfg = Release|Any CPU
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B983731-FDB7-4B2F-9415-A924FEA0B119} = {48305F2E-C928-4430-8C28-9EE6AC0D5498}
+		{21E6066F-13D9-4C82-8C6D-CB72E12E354E} = {48305F2E-C928-4430-8C28-9EE6AC0D5498}
+		{926CB1F9-8F40-4BB0-81FD-B085AF370AA1} = {48305F2E-C928-4430-8C28-9EE6AC0D5498}
+		{6D3A0C7C-AB4B-4163-9737-BD366E5D489D} = {2042768E-256F-4592-AF66-211CD843380B}
 	EndGlobalSection
 EndGlobal

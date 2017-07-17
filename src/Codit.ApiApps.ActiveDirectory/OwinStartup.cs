@@ -3,7 +3,10 @@ using System.Diagnostics;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using AutoMapper;
 using Codit.ApiApps.ActiveDirectory;
+using Codit.ApiApps.ActiveDirectory.Contracts;
+using Codit.ApiApps.ActiveDirectory.Contracts.v1;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Handlers;
 using Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Loggers;
@@ -16,6 +19,7 @@ using Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement;
 using Codit.ApiApps.Common.Configuration;
 using Codit.ApiApps.Common.Telemetry;
 using Codit.ApiApps.Security.KeyVault;
+using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Ninject;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
@@ -32,6 +36,7 @@ namespace Codit.ApiApps.ActiveDirectory
                 ConfigureExceptionHandling(app, GlobalConfiguration.Configuration);
                 ConfigureRoutes(GlobalConfiguration.Configuration);
                 ConfigureFormatters(GlobalConfiguration.Configuration);
+                ConfigureMapper();
 
                 GlobalConfiguration.Configuration.EnsureInitialized();
                 Trace.TraceInformation("Owin configured.");
@@ -40,6 +45,11 @@ namespace Codit.ApiApps.ActiveDirectory
             {
                 Trace.TraceError(ex.Message);
             }
+        }
+
+        private void ConfigureMapper()
+        {
+            ContractMapping.Setup();
         }
 
         private static void ConfigureDependencyInjection()
