@@ -33,7 +33,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         ///     Gets a specific user with a specific user principle name
         /// </summary>
         /// <param name="userPrincipleName">User principle name of the user to lookup</param>
-        [Route("user")]
+        [Route("users/{userPrincipleName}")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Specified user principle name was not valid")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User with specified user principle name was not found")]
