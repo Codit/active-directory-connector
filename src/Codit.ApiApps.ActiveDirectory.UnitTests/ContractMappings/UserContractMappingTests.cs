@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using NUnit.Framework;
@@ -15,24 +16,34 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             const string FirstName = "John";
             const string LastName = "Doe";
             string displayName = $"{FirstName} {LastName}";
+            const string JobTitle = "Recruiter";
+            const string Department = "HR";
             const string CompanyName = "Codit";
+            const string EmailAddress = "John.Doe@codit.eu";
+            const string TelephoneNumber = "+32 475 123456";
             const string Country = "Belgium";
             const string UserPrincipalName = "John.Doe@codit.eu";
             const string ObjectId = "f060a470-21ea-4e2b-95b5-d0fbc2cc8853";
             const string UserType = "Member";
             const string ObjectType = "User";
+            bool? isAccountEnabled = false;
 
             User activeDirectoryUser = new User
             {
                 GivenName = FirstName,
                 Surname = LastName,
                 CompanyName = CompanyName,
+                JobTitle = JobTitle,
+                Department = Department,
+                Mail = EmailAddress,
                 Country = Country,
                 DisplayName = displayName,
                 UserPrincipalName = UserPrincipalName,
                 ObjectId = ObjectId,
                 UserType = UserType,
-                ObjectType = ObjectType
+                ObjectType = ObjectType,
+                TelephoneNumber = TelephoneNumber,
+                AccountEnabled = isAccountEnabled
             };
 
             // Act
@@ -43,12 +54,17 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             Assert.AreEqual(FirstName, contractUser.FirstName);
             Assert.AreEqual(LastName, contractUser.LastName);
             Assert.AreEqual(displayName, contractUser.DisplayName);
+            Assert.AreEqual(JobTitle, contractUser.JobTitle);
+            Assert.AreEqual(Department, contractUser.Department);
+            Assert.AreEqual(EmailAddress, contractUser.EmailAddress);
+            Assert.AreEqual(TelephoneNumber, contractUser.TelephoneNumber);
             Assert.AreEqual(CompanyName, contractUser.CompanyName);
             Assert.AreEqual(Country, contractUser.Country);
             Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
             Assert.AreEqual(ObjectId, contractUser.ObjectId);
             Assert.AreEqual(UserType, contractUser.UserType);
             Assert.AreEqual(ObjectType, contractUser.ObjectType);
+            Assert.AreEqual(isAccountEnabled, contractUser.IsAccountEnabled);
         }
     }
 }
