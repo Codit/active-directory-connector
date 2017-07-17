@@ -26,7 +26,7 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             const string ObjectId = "f060a470-21ea-4e2b-95b5-d0fbc2cc8853";
             const string UserType = "Member";
             const string ObjectType = "User";
-            bool? isAccountEnabled = false;
+            bool? isAccountEnabled = true;
 
             User activeDirectoryUser = new User
             {
