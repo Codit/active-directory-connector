@@ -248,7 +248,7 @@ namespace Codit.ApiApps.ActiveDirectory
         }
         private static string GetXmlCommentsPath()
         {
-            return HostingEnvironment.MapPath("~/bin/Docs/Codit.ApiApps.ActiveDirectory.XML");
+            return HostingEnvironment.MapPath("~/Docs/Codit.ApiApps.ActiveDirectory.XML");
         }
     }
 }
