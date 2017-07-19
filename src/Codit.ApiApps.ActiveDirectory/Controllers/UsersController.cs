@@ -18,6 +18,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         /// <summary>
         ///     Gets all users in Active Directory
         /// </summary>
+        [HttpGet]
         [Route("users")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<User>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "No users were found")]
@@ -33,6 +34,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         ///     Gets a specific user with a specific user principle name
         /// </summary>
         /// <param name="userPrincipleName">User principle name of the user to lookup</param>
+        [HttpGet]
         [Route("users/{userPrincipleName}")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Specified user principle name was not valid")]
@@ -45,8 +47,8 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
                 return BadRequest("User principle name was not specified");
             }
 
-            Maybe<User> potenatialUser = await _userRepository.Get(userPrincipleName);
-            return potenatialUser.IsPresent ? (IHttpActionResult)Ok(potenatialUser.Value) : NotFound();
+            Maybe<User> potentialUser = await _userRepository.Get(userPrincipleName);
+            return potentialUser.IsPresent ? (IHttpActionResult)Ok(potentialUser.Value) : NotFound();
         }
     }
 }
