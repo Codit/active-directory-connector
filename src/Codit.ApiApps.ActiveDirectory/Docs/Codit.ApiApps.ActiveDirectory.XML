@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Codit.ApiApps.ActiveDirectory</name>
+    </assembly>
+    <members>
+        <member name="M:Codit.ApiApps.ActiveDirectory.Repositories.UserRepository.Get(System.String)">
+            <summary>
+                Gets a specific user by user pricinple name
+            </summary>
+            <param name="userPrincipleName">User principle name of the user</param>
+        </member>
+        <member name="M:Codit.ApiApps.ActiveDirectory.Repositories.UserRepository.Get">
+            <summary>
+                Gets all users
+            </summary>
+        </member>
+        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.GetUsers">
+            <summary>
+                Gets all users in Active Directory
+            </summary>
+        </member>
+        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.GetUserByUserPrincipleName(System.String)">
+            <summary>
+                Gets a specific user with a specific user principle name
+            </summary>
+            <param name="userPrincipleName">User principle name of the user to lookup</param>
+        </member>
+        <member name="P:Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement.DependencyContainer.Instance">
+            <summary>
+            Gets the instance of the dependency container
+            </summary>
+        </member>
+    </members>
+</doc>
