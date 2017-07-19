@@ -10,6 +10,8 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts
             Mapper.Initialize(cfg => cfg.CreateMap<IUser, v1.User>()
                 .ForMember(user => user.FirstName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.GivenName))
                 .ForMember(user => user.LastName, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.Surname))
+                .ForMember(user => user.EmailAddress, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.Mail))
+                .ForMember(user => user.IsAccountEnabled, options => options.MapFrom(activeDirectoryUser => activeDirectoryUser.AccountEnabled))
             );
         }
     }

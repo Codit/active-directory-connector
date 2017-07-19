@@ -18,7 +18,19 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string DisplayName { get; set; }
 
         [DataMember]
+        public string JobTitle { get; set; }
+
+        [DataMember]
+        public string Department { get; set; }
+
+        [DataMember]
         public string CompanyName { get; set; }
+
+        [DataMember]
+        public string EmailAddress { get; set; }
+
+        [DataMember]
+        public string TelephoneNumber { get; set; }
 
         [DataMember]
         public string Country { get; set; }
@@ -34,5 +46,12 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 
         [DataMember]
         public string ObjectType { get; set; }
+
+        [DataMember]
+        public bool IsAccountEnabled { get; set; }
+
+        /*
+         * Groups
+         */
     }
 }
