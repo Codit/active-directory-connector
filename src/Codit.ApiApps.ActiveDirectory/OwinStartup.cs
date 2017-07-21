@@ -59,11 +59,6 @@ namespace Codit.ApiApps.ActiveDirectory
                 DependencyContainer.Instance.Bind<ITelemetry>().To<ApplicationInsightsTelemetry>().InSingletonScope();
             }
 
-            if (DependencyContainer.Instance.TryGet<ISecretProvider>() == null)
-            {
-                DependencyContainer.Instance.Bind<ISecretProvider>().To<KeyVaultSecretProvider>().InSingletonScope();
-            }
-
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver();
         }
 
