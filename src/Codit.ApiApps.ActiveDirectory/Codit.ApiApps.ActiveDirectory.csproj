@@ -161,10 +161,6 @@
       <Project>{21e6066f-13d9-4c82-8c6d-cb72e12e354e}</Project>
       <Name>Codit.ApiApps.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Codit.ApiApps.Security.KeyVault\Codit.ApiApps.Security.KeyVault.csproj">
-      <Project>{926cb1f9-8f40-4bb0-81fd-b085af370aa1}</Project>
-      <Name>Codit.ApiApps.Security.KeyVault</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -60,7 +60,6 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
 
         private static string GetAppKey()
         {
-            // TODO: Use Key Vault instead
             var appKey = ConfigurationManager.AppSettings.Get("ActiveDirectory.QueryApplication.AppKey");
             return appKey;
         }
