@@ -3,10 +3,10 @@
 namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 {
     [DataContract]
-    public class CompanyInformation
+    public class JobInformation
     {
         [DataMember]
-        public string JobTitle { get; set; }
+        public string Title { get; set; }
 
         [DataMember]
         public string Department { get; set; }

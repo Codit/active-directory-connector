@@ -21,16 +21,13 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string UserPrincipalName { get; set; }
 
         [DataMember]
-        public string Country { get; set; }
-
-        [DataMember]
         public bool IsAccountEnabled { get; set; }
 
         [DataMember]
         public ContactInformation ContactInformation { get; set; }
 
         [DataMember]
-        public CompanyInformation CompanyInformation { get; set; }
+        public JobInformation JobInformation { get; set; }
 
         [DataMember]
         public UserMetadata Metadata { get; set; }
