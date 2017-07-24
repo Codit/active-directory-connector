@@ -65,7 +65,7 @@ namespace Codit.ApiApps.Common.Telemetry
                 {
                     Name = metricName,
                     Timestamp = DateTimeOffset.UtcNow,
-                    Value = value
+                    Sum = value
                 };
 
                 _telemetryClient.TrackMetric(metricTelemetry);
