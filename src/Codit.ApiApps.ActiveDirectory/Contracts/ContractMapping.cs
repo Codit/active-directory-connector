@@ -11,7 +11,8 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts
         {
             Mapper.Initialize(cfg =>
                 {
-                    cfg.CreateMap<IUser, CompanyInformation>();
+                    cfg.CreateMap<IUser, JobInformation>()
+                        .ForMember(jobInformation => jobInformation.Title, opt => opt.MapFrom(src => src.JobTitle));
                     cfg.CreateMap<IUser, ContactInformation>()
                         .ForMember(contactInformation => contactInformation.EmailAddress, opt => opt.MapFrom(src => src.Mail))
                         .ForMember(contactInformation => contactInformation.MobilePhoneNumber, opt => opt.MapFrom(src => src.Mobile))
@@ -21,7 +22,7 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts
                         .ForMember(user => user.FirstName, opt => opt.MapFrom(src => src.GivenName))
                         .ForMember(user => user.LastName, opt => opt.MapFrom(src => src.Surname))
                         .ForMember(user => user.IsAccountEnabled, opt => opt.MapFrom(src => src.AccountEnabled))
-                        .ForMember(user => user.CompanyInformation, opt => opt.MapFrom(src => Mapper.Map<IUser, CompanyInformation>(src)))
+                        .ForMember(user => user.JobInformation, opt => opt.MapFrom(src => Mapper.Map<IUser, JobInformation>(src)))
                         .ForMember(user => user.ContactInformation, opt => opt.MapFrom(src => Mapper.Map<IUser, ContactInformation>(src)))
                         .ForMember(user => user.Metadata, opt => opt.MapFrom(src => Mapper.Map<IUser, UserMetadata>(src)));
                 }

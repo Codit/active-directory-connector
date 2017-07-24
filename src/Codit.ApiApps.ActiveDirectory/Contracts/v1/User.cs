@@ -27,7 +27,7 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public ContactInformation ContactInformation { get; set; }
 
         [DataMember]
-        public CompanyInformation CompanyInformation { get; set; }
+        public JobInformation JobInformation { get; set; }
 
         [DataMember]
         public UserMetadata Metadata { get; set; }

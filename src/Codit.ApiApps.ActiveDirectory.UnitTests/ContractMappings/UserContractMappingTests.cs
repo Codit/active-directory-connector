@@ -19,6 +19,7 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             const string EmailAddress = "John.Doe@codit.eu";
             const string OfficePhoneNumber = "+32 475 123456";
             const string MobilePhoneNumber = "+32 475 123456";
+            const string City = "Ghent";
             const string Country = "Belgium";
             const string UserPrincipalName = "John.Doe@codit.eu";
             const string ObjectId = "f060a470-21ea-4e2b-95b5-d0fbc2cc8853";
@@ -35,6 +36,7 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
                 Department = Department,
                 Mail = EmailAddress,
                 Country = Country,
+                City = City,
                 DisplayName = displayName,
                 UserPrincipalName = UserPrincipalName,
                 ObjectId = ObjectId,
@@ -55,15 +57,16 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             Assert.AreEqual(displayName, contractUser.DisplayName);
             Assert.AreEqual(isAccountEnabled, contractUser.IsAccountEnabled);
             Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
-            Assert.NotNull(contractUser.CompanyInformation);
-            Assert.AreEqual(JobTitle, contractUser.CompanyInformation.JobTitle);
-            Assert.AreEqual(Department, contractUser.CompanyInformation.Department);
-            Assert.AreEqual(CompanyName, contractUser.CompanyInformation.CompanyName);
-            Assert.AreEqual(Country, contractUser.CompanyInformation.Country);
+            Assert.NotNull(contractUser.JobInformation);
+            Assert.AreEqual(JobTitle, contractUser.JobInformation.Title);
+            Assert.AreEqual(Department, contractUser.JobInformation.Department);
+            Assert.AreEqual(CompanyName, contractUser.JobInformation.CompanyName);
             Assert.NotNull(contractUser.ContactInformation);
             Assert.AreEqual(EmailAddress, contractUser.ContactInformation.EmailAddress);
             Assert.AreEqual(MobilePhoneNumber, contractUser.ContactInformation.MobilePhoneNumber);
             Assert.AreEqual(OfficePhoneNumber, contractUser.ContactInformation.OfficePhoneNumber);
+            Assert.AreEqual(City, contractUser.ContactInformation.City);
+            Assert.AreEqual(Country, contractUser.ContactInformation.Country);
             Assert.NotNull(contractUser.Metadata);
             Assert.AreEqual(UserType, contractUser.Metadata.UserType);
             Assert.AreEqual(ObjectId, contractUser.Metadata.ObjectId);

@@ -13,5 +13,11 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 
         [DataMember]
         public string MobilePhoneNumber { get; set; }
+
+        [DataMember]
+        public string City { get; set; }
+
+        [DataMember]
+        public string Country { get; set; }
     }
 }
