@@ -18,39 +18,18 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string DisplayName { get; set; }
 
         [DataMember]
-        public string JobTitle { get; set; }
-
-        [DataMember]
-        public string Department { get; set; }
-
-        [DataMember]
-        public string CompanyName { get; set; }
-
-        [DataMember]
-        public string EmailAddress { get; set; }
-
-        [DataMember]
-        public string OfficePhoneNumber { get; set; }
-
-        [DataMember]
-        public string MobilePhoneNumber { get; set; }
-
-        [DataMember]
-        public string Country { get; set; }
-
-        [DataMember]
         public string UserPrincipalName { get; set; }
 
         [DataMember]
-        public string UserType { get; set; }
-
-        [DataMember]
-        public string ObjectId { get; set; }
-
-        [DataMember]
-        public string ObjectType { get; set; }
-
-        [DataMember]
         public bool IsAccountEnabled { get; set; }
+
+        [DataMember]
+        public ContactInformation ContactInformation { get; set; }
+
+        [DataMember]
+        public CompanyInformation CompanyInformation { get; set; }
+
+        [DataMember]
+        public UserMetadata Metadata { get; set; }
     }
 }

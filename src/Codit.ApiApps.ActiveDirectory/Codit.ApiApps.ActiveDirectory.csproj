@@ -131,6 +131,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contracts\IContract.cs" />
     <Compile Include="Contracts\ContractMapping.cs" />
+    <Compile Include="Contracts\v1\CompanyInformation.cs" />
+    <Compile Include="Contracts\v1\ContactInformation.cs" />
+    <Compile Include="Contracts\v1\UserMetadata.cs" />
     <Compile Include="Contracts\v1\User.cs" />
     <Compile Include="Repositories\ActiveDirectoryRepository.cs" />
     <Compile Include="Controllers\UsersController.cs" />

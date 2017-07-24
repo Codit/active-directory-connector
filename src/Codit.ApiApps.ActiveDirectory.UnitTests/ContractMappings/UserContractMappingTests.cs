@@ -53,18 +53,21 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             Assert.AreEqual(FirstName, contractUser.FirstName);
             Assert.AreEqual(LastName, contractUser.LastName);
             Assert.AreEqual(displayName, contractUser.DisplayName);
-            Assert.AreEqual(JobTitle, contractUser.JobTitle);
-            Assert.AreEqual(Department, contractUser.Department);
-            Assert.AreEqual(EmailAddress, contractUser.EmailAddress);
-            Assert.AreEqual(MobilePhoneNumber, contractUser.MobilePhoneNumber);
-            Assert.AreEqual(OfficePhoneNumber, contractUser.OfficePhoneNumber);
-            Assert.AreEqual(CompanyName, contractUser.CompanyName);
-            Assert.AreEqual(Country, contractUser.Country);
-            Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
-            Assert.AreEqual(ObjectId, contractUser.ObjectId);
-            Assert.AreEqual(UserType, contractUser.UserType);
-            Assert.AreEqual(ObjectType, contractUser.ObjectType);
             Assert.AreEqual(isAccountEnabled, contractUser.IsAccountEnabled);
+            Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
+            Assert.NotNull(contractUser.CompanyInformation);
+            Assert.AreEqual(JobTitle, contractUser.CompanyInformation.JobTitle);
+            Assert.AreEqual(Department, contractUser.CompanyInformation.Department);
+            Assert.AreEqual(CompanyName, contractUser.CompanyInformation.CompanyName);
+            Assert.AreEqual(Country, contractUser.CompanyInformation.Country);
+            Assert.NotNull(contractUser.ContactInformation);
+            Assert.AreEqual(EmailAddress, contractUser.ContactInformation.EmailAddress);
+            Assert.AreEqual(MobilePhoneNumber, contractUser.ContactInformation.MobilePhoneNumber);
+            Assert.AreEqual(OfficePhoneNumber, contractUser.ContactInformation.OfficePhoneNumber);
+            Assert.NotNull(contractUser.Metadata);
+            Assert.AreEqual(UserType, contractUser.Metadata.UserType);
+            Assert.AreEqual(ObjectId, contractUser.Metadata.ObjectId);
+            Assert.AreEqual(ObjectType, contractUser.Metadata.ObjectType);
         }
     }
 }
