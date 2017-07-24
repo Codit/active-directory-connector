@@ -30,7 +30,10 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string EmailAddress { get; set; }
 
         [DataMember]
-        public string TelephoneNumber { get; set; }
+        public string OfficePhoneNumber { get; set; }
+
+        [DataMember]
+        public string MobilePhoneNumber { get; set; }
 
         [DataMember]
         public string Country { get; set; }
@@ -49,9 +52,5 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 
         [DataMember]
         public bool IsAccountEnabled { get; set; }
-
-        /*
-         * Groups
-         */
     }
 }
