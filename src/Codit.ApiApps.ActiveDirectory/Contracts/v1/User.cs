@@ -21,6 +21,9 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
         public string UserPrincipalName { get; set; }
 
         [DataMember]
+        public string Country { get; set; }
+
+        [DataMember]
         public bool IsAccountEnabled { get; set; }
 
         [DataMember]

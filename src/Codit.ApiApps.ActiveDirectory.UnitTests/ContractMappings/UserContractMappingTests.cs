@@ -55,11 +55,11 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             Assert.AreEqual(displayName, contractUser.DisplayName);
             Assert.AreEqual(isAccountEnabled, contractUser.IsAccountEnabled);
             Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
+            Assert.AreEqual(Country, contractUser.Country);
             Assert.NotNull(contractUser.CompanyInformation);
             Assert.AreEqual(JobTitle, contractUser.CompanyInformation.JobTitle);
             Assert.AreEqual(Department, contractUser.CompanyInformation.Department);
             Assert.AreEqual(CompanyName, contractUser.CompanyInformation.CompanyName);
-            Assert.AreEqual(Country, contractUser.CompanyInformation.Country);
             Assert.NotNull(contractUser.ContactInformation);
             Assert.AreEqual(EmailAddress, contractUser.ContactInformation.EmailAddress);
             Assert.AreEqual(MobilePhoneNumber, contractUser.ContactInformation.MobilePhoneNumber);

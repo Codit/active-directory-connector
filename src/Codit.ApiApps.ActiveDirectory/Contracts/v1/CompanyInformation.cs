@@ -13,8 +13,5 @@ namespace Codit.ApiApps.ActiveDirectory.Contracts.v1
 
         [DataMember]
         public string CompanyName { get; set; }
-
-        [DataMember]
-        public string Country { get; set; }
     }
 }
