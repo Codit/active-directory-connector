@@ -20,7 +20,8 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             const string Department = "HR";
             const string CompanyName = "Codit";
             const string EmailAddress = "John.Doe@codit.eu";
-            const string TelephoneNumber = "+32 475 123456";
+            const string OfficePhoneNumber = "+32 475 123456";
+            const string MobilePhoneNumber = "+32 475 123456";
             const string Country = "Belgium";
             const string UserPrincipalName = "John.Doe@codit.eu";
             const string ObjectId = "f060a470-21ea-4e2b-95b5-d0fbc2cc8853";
@@ -42,7 +43,8 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
                 ObjectId = ObjectId,
                 UserType = UserType,
                 ObjectType = ObjectType,
-                TelephoneNumber = TelephoneNumber,
+                TelephoneNumber = OfficePhoneNumber,
+                Mobile = MobilePhoneNumber,
                 AccountEnabled = isAccountEnabled
             };
 
@@ -57,7 +59,8 @@ namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
             Assert.AreEqual(JobTitle, contractUser.JobTitle);
             Assert.AreEqual(Department, contractUser.Department);
             Assert.AreEqual(EmailAddress, contractUser.EmailAddress);
-            Assert.AreEqual(TelephoneNumber, contractUser.TelephoneNumber);
+            Assert.AreEqual(MobilePhoneNumber, contractUser.MobilePhoneNumber);
+            Assert.AreEqual(OfficePhoneNumber, contractUser.OfficePhoneNumber);
             Assert.AreEqual(CompanyName, contractUser.CompanyName);
             Assert.AreEqual(Country, contractUser.Country);
             Assert.AreEqual(UserPrincipalName, contractUser.UserPrincipalName);
