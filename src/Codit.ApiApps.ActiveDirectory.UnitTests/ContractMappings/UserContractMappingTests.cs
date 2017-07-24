@@ -1,7 +1,4 @@
-﻿
-
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using NUnit.Framework;
 
