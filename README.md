@@ -11,15 +11,11 @@ The API App allows you to query your AD tenant:
 
 Missing something? Feel free to create open an [issue](https://github.com/tomkerkhove/active-directory-connector/issues).
 
-## Configuration
+## Installation
+All you have to do is host this connector as an **Azure API App** that you can use in your Logic App. 
+More information can be found [here](https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-custom-hosted-api).
 
-TBW
+Don't want to go through it yourself? Sit back and wait, we're working on it ([#20](https://github.com/tomkerkhove/active-directory-connector/issues/20)!
 
-```
-<appSettings>
-	<add key="Telemetry.ApplicationInsights" value="#{Telemetry.ApplicationInsights}#" />
-	<add key="ActiveDirectory.Tenant" value="#{ActiveDirectory.Tenant}#" />
-	<add key="ActiveDirectory.QueryApplication.ClientId" value="#{ActiveDirectory.QueryApplication.ClientId}#" />
-	<add key="ActiveDirectory.QueryApplication.AppKey" value="#{ActiveDirectory.QueryApplication.AppKey}#" />
-</appSettings>
-```
+# License Information
+This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
