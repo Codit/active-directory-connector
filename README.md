@@ -10,3 +10,16 @@ The API App allows you to query your AD tenant:
 - Get a specific user by user principle name ie. `tom.kerkhove@codit.eu`
 
 Missing something? Feel free to create open an [issue](https://github.com/tomkerkhove/active-directory-connector/issues).
+
+## Configuration
+
+TBW
+
+```
+<appSettings>
+	<add key="Telemetry.ApplicationInsights" value="#{Telemetry.ApplicationInsights}#" />
+	<add key="ActiveDirectory.Tenant" value="#{ActiveDirectory.Tenant}#" />
+	<add key="ActiveDirectory.QueryApplication.ClientId" value="#{ActiveDirectory.QueryApplication.ClientId}#" />
+	<add key="ActiveDirectory.QueryApplication.AppKey" value="#{ActiveDirectory.QueryApplication.AppKey}#" />
+</appSettings>
+```
