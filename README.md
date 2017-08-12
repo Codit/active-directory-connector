@@ -3,6 +3,8 @@ API for querying Graph API using Azure Active Directory Application authenticati
 
 ![Build Status](https://codit.visualstudio.com/_apis/public/build/definitions/fd3bf22a-f76c-448b-ad13-f5e97dd3a942/294/badge)
 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/) 
+
 ## Features
 The API App allows you to query your AD tenant:
 
