@@ -14,10 +14,10 @@
 				"description": "Enter the client id of your AD Application."
 			}
 		},
-		"activeDirectoryApplicationAppSecret": {
+		"activeDirectoryApplicationAppKey": {
 			"type": "string",
 			"metadata": {
-				"description": "Enter the key of your AD Application."
+				"description": "Enter the key of your AD Application to authenticate with."
 			}
 		},
 		"applicationInsightsName": {
@@ -161,7 +161,7 @@
 							},
 							{
 								"name": "ActiveDirectory.QueryApplication.AppKey",
-								"value": "[parameters('activeDirectoryApplicationAppSecret')]"
+								"value": "[parameters('activeDirectoryApplicationAppKey')]"
 							}
 						],
 						"cors": {
