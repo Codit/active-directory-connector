@@ -15,7 +15,7 @@
 			}
 		},
 		"activeDirectoryApplicationAppKey": {
-			"type": "string",
+			"type": "securestring",
 			"metadata": {
 				"description": "Enter the key of your AD Application to authenticate with."
 			}
