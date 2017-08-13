@@ -87,12 +87,6 @@
 				"2"
 			],
 			"defaultValue": "0"
-		},
-		"repoUrl": {
-			"type": "string"
-		},
-		"branch": {
-			"type": "string"
 		}
 	},
 	"resources": [
@@ -183,8 +177,8 @@
 						"[concat('Microsoft.Web/Sites/', parameters('siteName'), '/config/web')]"
 					],
 					"properties": {
-						"RepoUrl": "[parameters('repoUrl')]",
-						"branch": "[parameters('branch')]",
+						"RepoUrl": "https://github.com/tomkerkhove/active-directory-connector",
+						"branch": "master",
 						"IsManualIntegration": true
 					}
 				}
