@@ -26,19 +26,6 @@
 				"description": "Enter the application insights name."
 			}
 		},
-		"applicationInsightsType": {
-			"type": "string",
-			"defaultValue": "web",
-			"allowedValues": [
-				"web",
-				"java",
-				"HockeyAppBridge",
-				"other"
-			],
-			"metadata": {
-				"description": "Enter the application insights type."
-			}
-		},
 		"siteName": {
 			"type": "string"
 		},
@@ -82,17 +69,18 @@
 		"workerSize": {
 			"type": "string",
 			"allowedValues": [
-				"0",
-				"1",
-				"2"
+				"Small",
+				"Medium",
+				"Large",
+				"ExtraLarge"
 			],
-			"defaultValue": "0"
+			"defaultValue": "Small"
 		}
 	},
 	"resources": [
 		{
 			"type": "microsoft.insights/components",
-			"kind": "[parameters('applicationInsightsType')]",
+			"kind": "web",
 			"name": "[parameters('applicationInsightsName')]",
 			"apiVersion": "2014-04-01",
 			"location": "[parameters('siteLocation')]",
