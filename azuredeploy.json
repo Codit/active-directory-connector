@@ -166,7 +166,7 @@
 					],
 					"properties": {
 						"RepoUrl": "https://github.com/tomkerkhove/active-directory-connector",
-						"branch": "master",
+						"branch": "feature-slingshot-support",
 						"IsManualIntegration": true
 					}
 				}
