@@ -35,13 +35,13 @@
 				"West Europe"
 			]
 		},
-		"siteName": {
+		"apiAppName": {
 			"type": "string"
 		},
-		"hostingPlanName": {
+		"appPlanName": {
 			"type": "string"
 		},
-		"siteLocation": {
+		"apiAppLocation": {
 			"type": "string",
 			"allowedValues": [
 				"West US",
@@ -101,11 +101,11 @@
 		},
 		{
 			"apiVersion": "2014-06-01",
-			"name": "[parameters('hostingPlanName')]",
+			"name": "[parameters('appPlanName')]",
 			"type": "Microsoft.Web/serverFarms",
-			"location": "[parameters('siteLocation')]",
+			"location": "[parameters('apiAppLocation')]",
 			"properties": {
-				"name": "[parameters('hostingPlanName')]",
+				"name": "[parameters('appPlanName')]",
 				"sku": "[parameters('sku')]",
 				"workerSize": "[parameters('workerSize')]",
 				"numberOfWorkers": 1
@@ -113,20 +113,20 @@
 		},
 		{
 			"apiVersion": "2014-06-01",
-			"name": "[parameters('siteName')]",
+			"name": "[parameters('apiAppName')]",
 			"type": "Microsoft.Web/Sites",
 			"kind": "api",
-			"location": "[parameters('siteLocation')]",
+			"location": "[parameters('apiAppLocation')]",
 			"dependsOn": [
-				"[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]",
+				"[concat('Microsoft.Web/serverFarms/', parameters('appPlanName'))]",
 				"[concat('microsoft.insights/components/', parameters('applicationInsightsName'))]"
 			],
 			"tags": {
-				"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+				"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('appPlanName'))]": "empty"
 			},
 			"properties": {
-				"name": "[parameters('siteName')]",
-				"serverFarm": "[parameters('hostingPlanName')]"
+				"name": "[parameters('apiAppName')]",
+				"serverFarm": "[parameters('appPlanName')]"
 			},
 			"resources": [
 				{
@@ -134,7 +134,7 @@
 					"type": "config",
 					"name": "web",
 					"dependsOn": [
-						"[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+						"[concat('Microsoft.Web/Sites/', parameters('apiAppName'))]"
 					],
 					"properties": {
 						"appSettings": [
@@ -161,7 +161,7 @@
 							]
 						},
 						"apiDefinition": {
-							"url": "[concat('https://', parameters('siteName'), '.azurewebsites.net/swagger/docs/v1')]"
+							"url": "[concat('https://', parameters('apiAppName'), '.azurewebsites.net/swagger/docs/v1')]"
 						}
 					}
 				},
@@ -170,8 +170,8 @@
 					"name": "web",
 					"type": "sourcecontrols",
 					"dependsOn": [
-						"[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
-						"[concat('Microsoft.Web/Sites/', parameters('siteName'), '/config/web')]"
+						"[resourceId('Microsoft.Web/Sites', parameters('apiAppName'))]",
+						"[concat('Microsoft.Web/Sites/', parameters('apiAppName'), '/config/web')]"
 					],
 					"properties": {
 						"RepoUrl": "https://github.com/tomkerkhove/active-directory-connector",
