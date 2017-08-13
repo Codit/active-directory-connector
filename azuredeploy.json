@@ -26,6 +26,15 @@
 				"description": "Enter the application insights name."
 			}
 		},
+		"applicationInsightsLocation": {
+			"type": "string",
+			"allowedValues": [
+				"East US",
+				"South Central US",
+				"North Europe",
+				"West Europe"
+			]
+		},
 		"siteName": {
 			"type": "string"
 		},
@@ -83,7 +92,7 @@
 			"kind": "web",
 			"name": "[parameters('applicationInsightsName')]",
 			"apiVersion": "2014-04-01",
-			"location": "[parameters('siteLocation')]",
+			"location": "[parameters('applicationInsightsLocation')]",
 			"tags": {},
 			"properties": {
 				"ApplicationId": "[parameters('applicationInsightsName')]"
