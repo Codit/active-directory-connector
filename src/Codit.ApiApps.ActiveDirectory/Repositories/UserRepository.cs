@@ -63,17 +63,23 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
 
             var foundUsers = new List<User>();
+
             IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+            AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
 
-            while (usersPage.MorePagesAvailable)
+            do
             {
-                IEnumerable<User> userNamesInCurrentPage = usersPage.CurrentPage.Select(Mapper.Map<IUser, User>);
-                foundUsers.AddRange(userNamesInCurrentPage);
-
                 usersPage = await usersPage.GetNextPageAsync();
-            }
+                AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
+            } while (usersPage.MorePagesAvailable);
 
             return foundUsers;
+        }
+
+        private void AddPagedUsersToFoundUsers(List<User> foundUsers, IReadOnlyList<IUser> pagedUsersResult)
+        {
+            var mappedUsers = pagedUsersResult.Select(Mapper.Map<IUser, User>);
+            foundUsers.AddRange(mappedUsers);
         }
     }
 }
