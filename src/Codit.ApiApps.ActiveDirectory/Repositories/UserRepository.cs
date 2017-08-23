@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Codit.ApiApps.Common;
@@ -58,22 +59,39 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <summary>
         ///     Gets all users
         /// </summary>
-        public async Task<List<User>> Get()
+        public async Task<List<User>> GetAll(string companyName)
         {
             ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
 
             var foundUsers = new List<User>();
+
             IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
 
             while (usersPage.MorePagesAvailable)
             {
-                IEnumerable<User> userNamesInCurrentPage = usersPage.CurrentPage.Select(Mapper.Map<IUser, User>);
+                var filteredUsers = FilterUsers(usersPage, companyName);
+
+                IEnumerable<User> userNamesInCurrentPage = filteredUsers.Select(Mapper.Map<IUser, User>);
                 foundUsers.AddRange(userNamesInCurrentPage);
 
                 usersPage = await usersPage.GetNextPageAsync();
             }
 
             return foundUsers;
+        }
+
+        private static IReadOnlyList<IUser> FilterUsers(IPagedCollection<IUser> usersPage, string companyName)
+        {
+            var filteredUsers = usersPage.CurrentPage;
+
+            if (string.IsNullOrWhiteSpace(companyName) == false)
+            {
+                filteredUsers = filteredUsers.Where(user => string.IsNullOrWhiteSpace(user.CompanyName) == false &&
+                                                                    user.CompanyName.Equals(companyName, StringComparison.InvariantCultureIgnoreCase))
+                                                     .ToList();
+            }
+
+            return filteredUsers;
         }
     }
 }
