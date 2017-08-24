@@ -87,16 +87,16 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         {
             var filteredUsers = usersPage.CurrentPage;
 
-            if (string.IsNullOrWhiteSpace(companyName) == false)
+            if (!string.IsNullOrWhiteSpace(companyName))
             {
-                filteredUsers = filteredUsers.Where(user => string.IsNullOrWhiteSpace(user.CompanyName) == false &&
-                                                                    user.CompanyName.Equals(companyName, StringComparison.InvariantCultureIgnoreCase))
+                filteredUsers = filteredUsers.Where(user => !string.IsNullOrWhiteSpace(user.CompanyName) &&
+                                                            user.CompanyName.Equals(companyName, StringComparison.InvariantCultureIgnoreCase))
                                                      .ToList();
             }
 
             return filteredUsers;
         }
-        
+
         private void AddPagedUsersToFoundUsers(List<User> foundUsers, IReadOnlyList<IUser> pagedUsersResult)
         {
             var mappedUsers = pagedUsersResult.Select(Mapper.Map<IUser, User>);
