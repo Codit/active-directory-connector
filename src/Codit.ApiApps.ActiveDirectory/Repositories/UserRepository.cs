@@ -67,7 +67,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
             AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
 
-            if (usersPage.MorePagesAvailable == false)
+            if (!usersPage.MorePagesAvailable)
             {
                 return foundUsers;
             }
