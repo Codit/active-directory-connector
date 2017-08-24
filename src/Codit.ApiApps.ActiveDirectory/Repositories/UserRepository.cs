@@ -66,16 +66,19 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             var foundUsers = new List<User>();
 
             IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+            AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
 
-            while (usersPage.MorePagesAvailable)
+            if (!usersPage.MorePagesAvailable)
             {
-                var filteredUsers = FilterUsers(usersPage, companyName);
-
-                IEnumerable<User> userNamesInCurrentPage = filteredUsers.Select(Mapper.Map<IUser, User>);
-                foundUsers.AddRange(userNamesInCurrentPage);
-
-                usersPage = await usersPage.GetNextPageAsync();
+                return foundUsers;
             }
+
+            do
+            {
+                usersPage = await usersPage.GetNextPageAsync();
+                var filteredUsers = FilterUsers(usersPage, companyName);
+                AddPagedUsersToFoundUsers(foundUsers, filteredUsers);
+            } while (usersPage.MorePagesAvailable);
 
             return foundUsers;
         }
@@ -92,6 +95,12 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             }
 
             return filteredUsers;
+        }
+        
+        private void AddPagedUsersToFoundUsers(List<User> foundUsers, IReadOnlyList<IUser> pagedUsersResult)
+        {
+            var mappedUsers = pagedUsersResult.Select(Mapper.Map<IUser, User>);
+            foundUsers.AddRange(mappedUsers);
         }
     }
 }
