@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Codit.ApiApps.Common;
@@ -58,7 +59,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <summary>
         ///     Gets all users
         /// </summary>
-        public async Task<List<User>> Get()
+        public async Task<List<User>> GetAll(string companyName)
         {
             ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
 
@@ -75,10 +76,25 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             do
             {
                 usersPage = await usersPage.GetNextPageAsync();
-                AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
+                var filteredUsers = FilterUsers(usersPage, companyName);
+                AddPagedUsersToFoundUsers(foundUsers, filteredUsers);
             } while (usersPage.MorePagesAvailable);
 
             return foundUsers;
+        }
+
+        private static IReadOnlyList<IUser> FilterUsers(IPagedCollection<IUser> usersPage, string companyName)
+        {
+            var filteredUsers = usersPage.CurrentPage;
+
+            if (!string.IsNullOrWhiteSpace(companyName))
+            {
+                filteredUsers = filteredUsers.Where(user => !string.IsNullOrWhiteSpace(user.CompanyName) &&
+                                                            user.CompanyName.Equals(companyName, StringComparison.InvariantCultureIgnoreCase))
+                                                     .ToList();
+            }
+
+            return filteredUsers;
         }
 
         private void AddPagedUsersToFoundUsers(List<User> foundUsers, IReadOnlyList<IUser> pagedUsersResult)

@@ -23,9 +23,9 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<User>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "No users were found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
-        public async Task<IHttpActionResult> GetUsers()
+        public async Task<IHttpActionResult> GetUsers(string companyName = null)
         {
-            List<User> users = await _userRepository.Get();
+            List<User> users = await _userRepository.GetAll(companyName);
 
             return users.Any() ? (IHttpActionResult)Ok(users) : NotFound();
         }

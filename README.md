@@ -10,6 +10,7 @@ API for querying Graph API using Azure Active Directory Application authenticati
 The API App allows you to query your AD tenant:
 
 - Get a list of all users
+- Get a list of all users by company name
 - Get a specific user by user principle name ie. `tom.kerkhove@codit.eu`
 
 Missing something? Feel free to create open an [issue](https://github.com/tomkerkhove/active-directory-connector/issues).
