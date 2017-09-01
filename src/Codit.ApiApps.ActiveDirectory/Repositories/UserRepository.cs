@@ -63,10 +63,8 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         {
             ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
 
-            var foundUsers = new List<User>();
-
             IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
-            AddPagedUsersToFoundUsers(foundUsers, usersPage.CurrentPage);
+            List<User> foundUsers = FilterMatchingUsers(usersPage, companyName);
 
             if (!usersPage.MorePagesAvailable)
             {
@@ -76,11 +74,18 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             do
             {
                 usersPage = await usersPage.GetNextPageAsync();
-                var filteredUsers = FilterUsers(usersPage, companyName);
-                AddPagedUsersToFoundUsers(foundUsers, filteredUsers);
+                List<User> filteredUsers = FilterMatchingUsers(usersPage, companyName);
+                foundUsers.AddRange(filteredUsers);
             } while (usersPage.MorePagesAvailable);
 
             return foundUsers;
+        }
+
+        private List<User> FilterMatchingUsers(IPagedCollection<IUser> usersPage, string companyName)
+        {
+            var filteredUsers = FilterUsers(usersPage, companyName);
+            var users = MapUsers(filteredUsers);
+            return users;
         }
 
         private static IReadOnlyList<IUser> FilterUsers(IPagedCollection<IUser> usersPage, string companyName)
@@ -97,10 +102,14 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             return filteredUsers;
         }
 
-        private void AddPagedUsersToFoundUsers(List<User> foundUsers, IReadOnlyList<IUser> pagedUsersResult)
+        private List<User> MapUsers(IReadOnlyList<IUser> pagedUsersResult)
         {
+            List<User> users = new List<User>();
+
             var mappedUsers = pagedUsersResult.Select(Mapper.Map<IUser, User>);
-            foundUsers.AddRange(mappedUsers);
+            users.AddRange(mappedUsers);
+
+            return users;
         }
     }
 }
