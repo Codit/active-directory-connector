@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Active Directory API"
+  },
+  "host": "localhost:18471",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_GetUsers",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "companyName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "404": {
+            "description": "No users were found"
+          },
+          "500": {
+            "description": "We were unable to successfully process the request"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userPrincipleName}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets a specific user with a specific user principle name",
+        "operationId": "Users_GetUserByUserPrincipleName",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "userPrincipleName",
+            "in": "path",
+            "description": "User principle name of the user to lookup",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns found user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Specified user principle name was not valid"
+          },
+          "404": {
+            "description": "User with specified user principle name was not found"
+          },
+          "500": {
+            "description": "We were unable to successfully process the request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "userPrincipalName": {
+          "type": "string"
+        },
+        "isAccountEnabled": {
+          "type": "boolean"
+        },
+        "contactInformation": {
+          "$ref": "#/definitions/ContactInformation"
+        },
+        "jobInformation": {
+          "$ref": "#/definitions/JobInformation"
+        },
+        "metadata": {
+          "$ref": "#/definitions/UserMetadata"
+        }
+      }
+    },
+    "ContactInformation": {
+      "type": "object",
+      "properties": {
+        "emailAddress": {
+          "type": "string"
+        },
+        "officePhoneNumber": {
+          "type": "string"
+        },
+        "mobilePhoneNumber": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "JobInformation": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "companyName": {
+          "type": "string"
+        }
+      }
+    },
+    "UserMetadata": {
+      "type": "object",
+      "properties": {
+        "userType": {
+          "type": "string"
+        },
+        "objectId": {
+          "type": "string"
+        },
+        "objectType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
