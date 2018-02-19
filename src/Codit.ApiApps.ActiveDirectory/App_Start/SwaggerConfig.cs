@@ -8,8 +8,10 @@ namespace Codit.ApiApps.ActiveDirectory
     {
         public static void Register()
         {
+            var xmlCommentsUri = GetXmlCommentsPath();
+
             GlobalConfiguration.Configuration
-                .EnableSwagger(c =>
+                .EnableSwagger(swaggerDocsConfig =>
                     {
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
@@ -21,17 +23,17 @@ namespace Codit.ApiApps.ActiveDirectory
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                         // about them, you can use the "Schemes" option as shown below.
                         //
-                        //c.Schemes(new[] { "http", "https" });
+                        swaggerDocsConfig.Schemes(new[] { "https" });
 
                         // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "Active Directory");
+                        swaggerDocsConfig.SingleApiVersion("v1", "Active Directory API");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
-                        c.PrettyPrint();
+                        swaggerDocsConfig.PrettyPrint();
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -96,7 +98,7 @@ namespace Codit.ApiApps.ActiveDirectory
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        c.IncludeXmlComments(GetXmlCommentsPath());
+                        swaggerDocsConfig.IncludeXmlComments(xmlCommentsUri);
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -138,7 +140,7 @@ namespace Codit.ApiApps.ActiveDirectory
                         // enum type. Swashbuckle will honor this change out-of-the-box. However, if you use a different
                         // approach to serialize enums as strings, you can also force Swashbuckle to describe them as strings.
                         //
-                        c.DescribeAllEnumsAsStrings();
+                        swaggerDocsConfig.DescribeAllEnumsAsStrings();
 
                         // Similar to Schema filters, Swashbuckle also supports Operation and Document filters:
                         //
@@ -172,12 +174,12 @@ namespace Codit.ApiApps.ActiveDirectory
                         //
                         //c.CustomProvider((defaultProvider) => new CachingSwaggerProvider(defaultProvider));
                     })
-                .EnableSwaggerUi(c =>
+                .EnableSwaggerUi(swaggerUiConfig =>
                     {
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //
-                        //c.DocumentTitle("My Swagger UI");
+                        swaggerUiConfig.DocumentTitle("Active Directory API");
 
                         // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
                         // The file must be included in your project as an "Embedded Resource", and then the resource's
