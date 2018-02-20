@@ -14,7 +14,7 @@
         "tags": [
           "Users"
         ],
-        "operationId": "Users_GetUsers",
+        "operationId": "Get Users",
         "consumes": [],
         "produces": [
           "application/json",
@@ -55,7 +55,7 @@
           "Users"
         ],
         "summary": "Gets a specific user with a specific user principle name",
-        "operationId": "Users_GetUserByUserPrincipleName",
+        "operationId": "Get Users By User Principle Name",
         "consumes": [],
         "produces": [
           "application/json",
