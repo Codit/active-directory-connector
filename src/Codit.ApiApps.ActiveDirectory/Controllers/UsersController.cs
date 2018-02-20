@@ -18,8 +18,10 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         /// <summary>
         ///     Gets all users in Active Directory
         /// </summary>
+        /// <param name="companyName">Name of the company to filter on</param>
         [HttpGet]
         [Route("users")]
+        [SwaggerOperation("Get Users")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<User>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "No users were found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
@@ -36,6 +38,7 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         /// <param name="userPrincipleName">User principle name of the user to lookup</param>
         [HttpGet]
         [Route("users/{userPrincipleName}")]
+        [SwaggerOperation("Get Users By User Principle Name")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Specified user principle name was not valid")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User with specified user principle name was not found")]
