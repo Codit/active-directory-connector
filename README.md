@@ -19,7 +19,7 @@ Missing something? Feel free to create open an [issue](https://github.com/tomker
 All you have to do is host this connector as an **Azure API App** that you can use in your Logic App. 
 More information can be found [here](https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-custom-hosted-api).
 
-Don't want to go through it yourself? Sit back and wait, we're working on it ([#20](https://github.com/tomkerkhove/active-directory-connector/issues/20))!
+Don't want to go through it yourself? Use the "Deploy To Azure" button!
 
 ## Configuration
 In order to use this connector a new Azure AD Application needs to be created in the AD tenant that will be queried. Once created, it needs the following permissions:
