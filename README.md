@@ -30,10 +30,10 @@ In order to use this connector a new Azure AD Application needs to be created in
 	
 Once everything is setup, configuring the connector itself is straight forward :
 
-- `ActiveDirectory.Tenant` with your AD tenant name, ie. `codito.onmicrosoft.com`
-- `ActiveDirectory.QueryApplication.ClientId` with the Application Id of your Azure AD Application
-- `ActiveDirectory.QueryApplication.AppKey` with a key that is added to your Azure AD Application
-- If you want to track exceptions to Azure Application Insights, make sure to configure `Telemetry.ApplicationInsights` with the instrumentation key of your instance
+- `ActiveDirectory.Tenant` - Name of your AD tenant ie. `codito.onmicrosoft.com`
+- `ActiveDirectory.QueryApplication.ClientId` - Application Id of your Azure AD application
+- `ActiveDirectory.QueryApplication.AppKey` - Authentication key for your Azure AD Application
+- `Telemetry.ApplicationInsights` - Instrumentation key for Azure Application Inishgts to track exceptions with _(Optional)_
 
 Here is a complete overview of all the settings:
 
