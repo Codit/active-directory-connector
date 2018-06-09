@@ -22,13 +22,16 @@ More information can be found [here](https://docs.microsoft.com/en-us/azure/logi
 Don't want to go through it yourself? Use the "Deploy To Azure" button!
 
 ## Configuration
-In order to use this connector a new Azure AD Application needs to be created in the AD tenant that will be queried. Once created, it needs the following permissions:
+
+### Creating an Azure AD Application
+In order to use this connector, it is required to use an Azure AD Application that will be used to query Azure AD. Make sure the application is created in the same AD tenant and has the following permissions:
 
 - **Application Permissions**
 	- Windows Azure Active Directory API
 		- _Read directory data_
-	
-Once everything is setup, configuring the connector itself is straight forward :
+
+### Configuring the API App
+The following configuration should be provided in the web.config:
 
 - `ActiveDirectory.Tenant` - Name of your AD tenant ie. `codito.onmicrosoft.com`
 - `ActiveDirectory.QueryApplication.ClientId` - Application Id of your Azure AD application
