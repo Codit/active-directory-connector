@@ -2,7 +2,7 @@
 
 namespace Codit.ApiApps.ActiveDirectory.UnitTests
 {
-    [Category("UnitTests")]
+    [Category("Unit")]
     public class UnitTest
     {
     }
