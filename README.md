@@ -1,6 +1,7 @@
 # Active Directory connector for Logic Apps
 
-[![Build status](https://ci.appveyor.com/api/projects/status/inoupu68a682vt2r/branch/master?svg=true)](https://ci.appveyor.com/project/tomkerkhove/active-directory-connector/branch/master) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/tomkerkhove/active-directory-connector/blob/master/LICENSE)
+[![Build status](https://ci.appveyor.com/api/projects/status/fmb3y2808ba8hk4p/branch/master?svg=true)](https://ci.appveyor.com/project/tomkerkhove/active-directory-connector-k8ltb/branch/master)
+ [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/tomkerkhove/active-directory-connector/blob/master/LICENSE)
 
 API for querying Graph API using Azure Active Directory Application authentication.
 
