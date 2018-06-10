@@ -13,23 +13,29 @@ namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Handlers
         {
             var response = context.Request.CreateResponse(HttpStatusCode.InternalServerError,
                 "The request could not be completed, please try again.");
-            var webException = context.Exception as WebException;
-            if (webException != null)
+
+            if (context.Exception is WebException webException)
             {
                 var statusCode = HttpStatusCode.InternalServerError;
                 var statusMessage = "The request could not be completed, please try again.";
-                if (webException.Status == WebExceptionStatus.Timeout)
-                    statusCode = HttpStatusCode.RequestTimeout;
-                if (webException.Status == WebExceptionStatus.ConnectFailure ||
-                    webException.Status == WebExceptionStatus.ProxyNameResolutionFailure ||
-                    webException.Status == WebExceptionStatus.ReceiveFailure)
-                    statusCode = HttpStatusCode.BadGateway;
-                if (webException.Status == WebExceptionStatus.ProtocolError)
+
+                switch (webException.Status)
                 {
-                    statusCode = HttpStatusCode.Forbidden;
-                    statusMessage =
-                        "The request could not be completed. Check that you are correctly authenticated and have rights to access the resource.";
+                    case WebExceptionStatus.Timeout:
+                        statusCode = HttpStatusCode.RequestTimeout;
+                        break;
+                    case WebExceptionStatus.ConnectFailure:
+                    case WebExceptionStatus.ProxyNameResolutionFailure:
+                    case WebExceptionStatus.ReceiveFailure:
+                        statusCode = HttpStatusCode.BadGateway;
+                        break;
+                    case WebExceptionStatus.ProtocolError:
+                        statusCode = HttpStatusCode.Forbidden;
+                        statusMessage =
+                            "The request could not be completed. Check that you are correctly authenticated and have rights to access the resource.";
+                        break;
                 }
+
                 response = context.Request.CreateResponse(statusCode, statusMessage);
             }
 

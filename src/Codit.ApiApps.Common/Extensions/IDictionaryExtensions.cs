@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
+// ReSharper disable once CheckNamespace
 namespace System.Collections.Generic
 {
     public static class IDictionaryExtensions
@@ -18,6 +17,8 @@ namespace System.Collections.Generic
         /// <returns>Merged dictionary</returns>
         public static IDictionary<TKey, TValue> Merge<TKey, TValue>(this IDictionary<TKey, TValue> destination, IDictionary<TKey, TValue> source, Func<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> manipulationFunc)
         {
+            Guard.Guard.NotNull(destination, nameof(destination), "No destination dictionary was provided");
+
             if (source == null)
             {
                 return destination;

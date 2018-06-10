@@ -25,7 +25,7 @@ namespace Codit.ApiApps.ActiveDirectory.Middleware.ExceptionHandling.Loggers
             if (context.Request != null)
             {
                 var correlationId = context.Request.GetCorrelationId();
-                customProperties.Add("CorrelationId", Convert.ToString((object)correlationId));
+                customProperties.Add("CorrelationId", Convert.ToString(correlationId));
             }
 
             DependencyContainer.Instance.Get<ITelemetry>().TrackException(context.Exception, customProperties);
