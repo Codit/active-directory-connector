@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Codit.ApiApps.Common;
@@ -20,12 +19,16 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <param name="userPrincipleName">User principle name of the user</param>
         public async Task<Maybe<User>> Get(string userPrincipleName)
         {
-            Guard.AgainstNullOrWhitespace(userPrincipleName, nameof(userPrincipleName));
+            Guard.Guard.NotNullOrEmpty(userPrincipleName, nameof(userPrincipleName),
+                "No user principle name was specified");
 
-            ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
+            var activeDirectoryClient = GetActiveDirectoryClient();
+
             try
             {
-                IPagedCollection<IUser> foundUsers = await activeDirectoryClient.Users.Where(usr => usr.UserPrincipalName.Equals(userPrincipleName, StringComparison.InvariantCultureIgnoreCase)).ExecuteAsync();
+                var foundUsers = await activeDirectoryClient.Users
+                    .Where(usr => usr.UserPrincipalName.Equals(userPrincipleName,
+                        StringComparison.InvariantCultureIgnoreCase)).ExecuteAsync();
 
                 if (foundUsers?.CurrentPage == null || foundUsers.CurrentPage.Any() == false)
                 {
@@ -34,17 +37,18 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
 
                 if (foundUsers.CurrentPage.Count > 1)
                 {
-                    throw new InvalidOperationException($"More than one user was found with user principle name '{userPrincipleName}'");
+                    throw new InvalidOperationException(
+                        $"More than one user was found with user principle name '{userPrincipleName}'");
                 }
 
-                IUser foundUser = foundUsers.CurrentPage.First();
-                User user = Mapper.Map<IUser, User>(foundUser);
+                var foundUser = foundUsers.CurrentPage.First();
+                var user = Mapper.Map<IUser, User>(foundUser);
 
                 return new Maybe<User>(user);
             }
             catch (ODataErrorException oDataErrorException)
             {
-                string objectNotFoundMessage =
+                var objectNotFoundMessage =
                     $"Resource '{userPrincipleName}' does not exist or one of its queried reference-property objects are not present.";
 
                 if (oDataErrorException.Message.Contains(objectNotFoundMessage))
@@ -61,10 +65,10 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// </summary>
         public async Task<List<User>> GetAll(string companyName)
         {
-            ActiveDirectoryClient activeDirectoryClient = GetActiveDirectoryClient();
+            var activeDirectoryClient = GetActiveDirectoryClient();
 
-            IPagedCollection<IUser> usersPage = await activeDirectoryClient.Users.ExecuteAsync();
-            List<User> foundUsers = FilterMatchingUsers(usersPage, companyName);
+            var usersPage = await activeDirectoryClient.Users.ExecuteAsync();
+            var foundUsers = FilterMatchingUsers(usersPage, companyName);
 
             if (!usersPage.MorePagesAvailable)
             {
@@ -74,7 +78,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             do
             {
                 usersPage = await usersPage.GetNextPageAsync();
-                List<User> filteredUsers = FilterMatchingUsers(usersPage, companyName);
+                var filteredUsers = FilterMatchingUsers(usersPage, companyName);
                 foundUsers.AddRange(filteredUsers);
             } while (usersPage.MorePagesAvailable);
 
@@ -95,8 +99,9 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
             if (!string.IsNullOrWhiteSpace(companyName))
             {
                 filteredUsers = filteredUsers.Where(user => !string.IsNullOrWhiteSpace(user.CompanyName) &&
-                                                            user.CompanyName.Equals(companyName, StringComparison.InvariantCultureIgnoreCase))
-                                                     .ToList();
+                                                            user.CompanyName.Equals(companyName,
+                                                                StringComparison.InvariantCultureIgnoreCase))
+                    .ToList();
             }
 
             return filteredUsers;
@@ -104,7 +109,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
 
         private List<User> MapUsers(IReadOnlyList<IUser> pagedUsersResult)
         {
-            List<User> users = new List<User>();
+            var users = new List<User>();
 
             var mappedUsers = pagedUsersResult.Select(Mapper.Map<IUser, User>);
             users.AddRange(mappedUsers);

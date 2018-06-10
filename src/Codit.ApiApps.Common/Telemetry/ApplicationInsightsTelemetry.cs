@@ -22,6 +22,7 @@ namespace Codit.ApiApps.Common.Telemetry
         public ApplicationInsightsTelemetry()
         {
             TelemetryConfiguration.Active.DisableTelemetry = false;
+
             _telemetryClient = new TelemetryClient
             {
                 InstrumentationKey = ConfigurationManager.AppSettings["Telemetry.ApplicationInsights"]
@@ -129,7 +130,9 @@ namespace Codit.ApiApps.Common.Telemetry
                 };
 
                 if (string.IsNullOrWhiteSpace(sequence) == false)
+                {
                     traceTelemetry.Sequence = sequence;
+                }
 
                 traceTelemetry.Properties.Merge(customProperties, OptimizeProperty);
 
@@ -147,12 +150,16 @@ namespace Codit.ApiApps.Common.Telemetry
             var propertyValue = property.Value;
 
             // Avoid going over the size limit for AI
-            if ((string.IsNullOrWhiteSpace(propertyValue) == false) && (propertyValue.Length > 1000))
+            if (string.IsNullOrWhiteSpace(propertyValue) == false && propertyValue.Length > 1000)
+            {
                 propertyValue = propertyValue.Substring(0, 1000);
+            }
 
             // Avoid having spaces in the property name for processing reasons
             if (string.IsNullOrWhiteSpace(propertyName) == false)
+            {
                 propertyName = propertyName.Replace(" ", "");
+            }
 
             return new KeyValuePair<string, string>(propertyName, propertyValue);
         }

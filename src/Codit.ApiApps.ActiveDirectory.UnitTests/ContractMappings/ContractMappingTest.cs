@@ -1,8 +1,10 @@
 ﻿using Codit.ApiApps.ActiveDirectory.Contracts;
+using NUnit.Framework;
 
 namespace Codit.ApiApps.ActiveDirectory.UnitTests.ContractMappings
 {
-    public class ContractMappingTest : UnitTest
+    [Category("Unit")]
+    public class ContractMappingTest
     {
         public ContractMappingTest()
         {
