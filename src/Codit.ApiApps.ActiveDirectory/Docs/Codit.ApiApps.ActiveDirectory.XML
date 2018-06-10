@@ -10,20 +10,23 @@
             </summary>
             <param name="userPrincipleName">User principle name of the user</param>
         </member>
-        <member name="M:Codit.ApiApps.ActiveDirectory.Repositories.UserRepository.Get">
+        <member name="M:Codit.ApiApps.ActiveDirectory.Repositories.UserRepository.GetAll(System.String)">
             <summary>
                 Gets all users
             </summary>
         </member>
-        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.GetUsers">
+        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.GetAll(System.String)">
             <summary>
-                Gets all users in Active Directory
+                Get Users
             </summary>
+            <remarks>Gets all users in Active Directory</remarks>
+            <param name="companyName">Name of the company to filter on</param>
         </member>
-        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.GetUserByUserPrincipleName(System.String)">
+        <member name="M:Codit.ApiApps.ActiveDirectory.Controllers.UsersController.Get(System.String)">
             <summary>
-                Gets a specific user with a specific user principle name
+                Get Users By User Principle Name
             </summary>
+            <remarks>Gets a specific user with a specific user principle name</remarks>
             <param name="userPrincipleName">User principle name of the user to lookup</param>
         </member>
         <member name="P:Codit.ApiApps.ActiveDirectory.Middleware.DependencyManagement.DependencyContainer.Instance">

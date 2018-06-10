@@ -16,16 +16,17 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         private readonly UserRepository _userRepository = new UserRepository();
 
         /// <summary>
-        ///     Gets all users in Active Directory
+        ///     Get Users
         /// </summary>
+        /// <remarks>Gets all users in Active Directory</remarks>
         /// <param name="companyName">Name of the company to filter on</param>
         [HttpGet]
         [Route("users")]
-        [SwaggerOperation("Get Users")]
+        [SwaggerOperation("Users_GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns all users", typeof(List<User>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "No users were found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
-        public async Task<IHttpActionResult> GetUsers(string companyName = null)
+        public async Task<IHttpActionResult> GetAll(string companyName = null)
         {
             List<User> users = await _userRepository.GetAll(companyName);
 
@@ -33,17 +34,18 @@ namespace Codit.ApiApps.ActiveDirectory.Controllers
         }
 
         /// <summary>
-        ///     Gets a specific user with a specific user principle name
+        ///     Get Users By User Principle Name
         /// </summary>
+        /// <remarks>Gets a specific user with a specific user principle name</remarks>
         /// <param name="userPrincipleName">User principle name of the user to lookup</param>
         [HttpGet]
         [Route("users/{userPrincipleName}")]
-        [SwaggerOperation("Get Users By User Principle Name")]
+        [SwaggerOperation("Users_Get")]
         [SwaggerResponse(HttpStatusCode.OK, "Returns found user", typeof(User))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Specified user principle name was not valid")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User with specified user principle name was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "We were unable to successfully process the request")]
-        public async Task<IHttpActionResult> GetUserByUserPrincipleName(string userPrincipleName)
+        public async Task<IHttpActionResult> Get(string userPrincipleName)
         {
             if (string.IsNullOrWhiteSpace(userPrincipleName))
             {

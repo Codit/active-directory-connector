@@ -14,7 +14,9 @@
         "tags": [
           "Users"
         ],
-        "operationId": "Get Users",
+        "summary": "Get Users",
+        "description": "Gets all users in Active Directory",
+        "operationId": "Users_GetAll",
         "consumes": [],
         "produces": [
           "application/json",
@@ -26,6 +28,7 @@
           {
             "name": "companyName",
             "in": "query",
+            "description": "Name of the company to filter on",
             "required": false,
             "type": "string"
           }
@@ -54,8 +57,9 @@
         "tags": [
           "Users"
         ],
-        "summary": "Gets a specific user with a specific user principle name",
-        "operationId": "Get Users By User Principle Name",
+        "summary": "Get Users By User Principle Name",
+        "description": "Gets a specific user with a specific user principle name",
+        "operationId": "Users_Get",
         "consumes": [],
         "produces": [
           "application/json",
