@@ -86,7 +86,6 @@
     <Compile Include="ContractMappings\ContractMappingTest.cs" />
     <Compile Include="ContractMappings\UserContractMappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Codit.ApiApps.ActiveDirectory\Codit.ApiApps.ActiveDirectory.csproj">
