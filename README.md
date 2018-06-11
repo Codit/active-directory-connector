@@ -14,7 +14,7 @@ The API App allows you to query your AD tenant:
 - Get a list of all users by company name
 - Get a specific user by user principle name ie. `tom.kerkhove@codit.eu`
 
-Missing something? Feel free to create open an [issue](https://github.com/tomkerkhove/active-directory-connector/issues).
+Missing something? Feel free to create open an [issue](https://github.com/coditeu/active-directory-connector/issues).
 
 ## Installation
 All you have to do is host this connector as an **Azure API App** that you can use in your Logic App. 
