@@ -17,7 +17,7 @@ namespace System.Collections.Generic
         /// <returns>Merged dictionary</returns>
         public static IDictionary<TKey, TValue> Merge<TKey, TValue>(this IDictionary<TKey, TValue> destination, IDictionary<TKey, TValue> source, Func<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> manipulationFunc)
         {
-            Guard.Guard.NotNull(destination, nameof(destination), "No destination dictionary was provided");
+            Guard.Guard.NotNull(destination, nameof(destination));
 
             if (source == null)
             {

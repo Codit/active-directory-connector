@@ -19,8 +19,7 @@ namespace Codit.ApiApps.ActiveDirectory.Repositories
         /// <param name="userPrincipleName">User principle name of the user</param>
         public async Task<Maybe<User>> Get(string userPrincipleName)
         {
-            Guard.Guard.NotNullOrEmpty(userPrincipleName, nameof(userPrincipleName),
-                "No user principle name was specified");
+            Guard.Guard.NotNullOrEmpty(userPrincipleName, nameof(userPrincipleName));
 
             var activeDirectoryClient = GetActiveDirectoryClient();
 
